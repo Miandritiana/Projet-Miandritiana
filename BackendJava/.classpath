@@ -1,0 +1,5 @@
+<classpath>
+    <!-- Other classpath entries -->
+    <classpathentry kind="lib" path="lib/postgresql-42.7.0.jar"/>
+    <!-- Replace 'postgresql.jar' with the actual name of your JDBC driver JAR file -->
+</classpath>
