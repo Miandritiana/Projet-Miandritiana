@@ -1,48 +1,58 @@
-// package ep;
-// public class Type
- 
-//  {
-//  	int idtype;
-//     String nom;
-//     public Type(int id,String nomtype)
-//  	{
-//  		this.idtype=id;
-//  		this.nom=nomtype;
-//     }
-   
-//  	public int getid()
-//  	{
-//  		return this.idtype;
-//  	}
-//  	public void setid(String id)
-//  	{
-//  		this.idtype=id;
-//  	}
-//  	public String getnom()
-//  	{
-//  		return this.nom;
-//  	}
-//  	public void setnom(String nomtype)
-//  	{
-//  		this.nom=nomproduit;
-//  	}
+package ep;
 
-//     public int makaIdType(String nom) throws Exception {
-//         Connexion connect=new Connexion();
-//         Connection con=connect.connecter();
-//         Statement statement = con.createStatement();
-//         String requete = "SELECT idtype FROM Categorie WHERE nom = ?";
-//         ResultSet resultat = statement.executeQuery(requete);
-        
-//         int idTp = 0;
-        
-//         if (result.next()) {
-//             idTp = result.getInt("idtype");
-//         }
-    
-//         return idTp;
-//         con.close();
-//         statement.close();
-//         resultat.close();
-//     }
-//  }
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Type
+{
+ 	int idType;
+    String nom;
+
+    public Type () {}
+    public Type(int idType, String nom) {
+        this.idType = idType;
+        this.nom = nom;
+    }
+
+    public int getIdType() {
+        return idType;
+    }
+
+    public void setIdType(int idType) {
+        this.idType = idType;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public List<Type> makaType(Connexion c) throws Exception {
+        List<Type> types = new ArrayList<>();
+
+        try (Connection con = (Connection) c.miconnect();
+             Statement statement = con.createStatement()) {
+
+            String requete = "SELECT * FROM type";
+            ResultSet resultat = statement.executeQuery(requete);
+
+            while (resultat.next()) {
+                Type p = new Type();
+                p.setIdType (resultat.getInt("idType"));
+                p.setNom(resultat.getString("nom"));
+                types.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Tsy azo le type");
+        }
+
+        return types;
+    }
+ }

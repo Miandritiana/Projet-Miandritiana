@@ -33,6 +33,17 @@ values
     ('Montre', 2, 1, 150000);
 
 create view v_produit as
-select p.idProduit, p.nom, t.nom as type, c.nom as categorie from produit p
+select p.idProduit, p.nom, t.nom as type, c.nom as categorie, p.prix from produit p
     join type t on t.idType = p.idType
     join categorie c on c.idCategorie = p.idCategorie;
+
+create view v_produit as
+select p.idProduit, p.nom, t.idType, t.nom as type, c.idCategorie, c.nom as categorie, p.prix from produit p
+    join type t on t.idType = p.idType
+    join categorie c on c.idCategorie = p.idCategorie;
+
+
+alter table categorie add column coef int;
+update categorie set coef = 3 where idCategorie = 1;
+update categorie set coef = 2 where idCategorie = 2;
+update categorie set coef = 1 where idCategorie = 3;

@@ -10,12 +10,13 @@ public class Connexion {
 
     public Connection miconnect() throws Exception {
         String dbUrl = "jdbc:postgresql://localhost:5432/epicerie";
-        String user = "root";
+        String user = "postgres";
         String password = "root";
 
         try {
+            Class.forName("org.postgresql.Driver");
             connexion = DriverManager.getConnection(dbUrl, user, password);
-            System.out.println("Connexion à PostgreSQL établie avec succès!");
+            System.out.println("Made connexion postgres");
             return connexion;
         } catch (SQLException e) {
             System.out.println("Erreur lors de la connexion à PostgreSQL:");
